@@ -56,6 +56,10 @@
       position: absolute;
     }
 
+    .gizli-form {
+      display: none;
+    }
+
     #cevap {
       margin-top: 20px;
       font-weight: bold;
@@ -77,26 +81,37 @@
     <button class="tabiki" onclick="cevapGoster('Tabii ki Evet')">Tabii ki Evet</button>
     <button class="hayir" id="hayirBtn">Hayır</button>
     <p id="cevap"></p>
+
+    <!-- Formspree formu (gizli) -->
+    <form
+      action="https://formspree.io/f/xdkzglbk"
+      method="POST"
+      class="gizli-form"
+      id="anketForm"
+    >
+      <input type="hidden" name="cevap" id="cevapInput" />
+    </form>
   </div>
 
   <script>
     const hayirBtn = document.getElementById("hayirBtn");
     const container = document.getElementById("container");
 
-    // Başlangıç pozisyonu
     hayirBtn.style.left = "50%";
     hayirBtn.style.top = "250px";
     hayirBtn.style.transform = "translateX(-50%)";
 
     function cevapGoster(cevap) {
       document.getElementById("cevap").innerText = "Cevabınız: " + cevap;
+      document.getElementById("cevapInput").value = cevap;
+
+      // Formu gönder (arka planda)
+      document.getElementById("anketForm").submit();
     }
 
     function kacHayir() {
-      const containerRect = container.getBoundingClientRect();
       const btnWidth = hayirBtn.offsetWidth;
       const btnHeight = hayirBtn.offsetHeight;
-
       const maxX = container.offsetWidth - btnWidth;
       const maxY = container.offsetHeight - btnHeight;
 
